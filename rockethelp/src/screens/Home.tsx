@@ -1,6 +1,7 @@
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { FlatList, Heading, HStack, IconButton, Text, useTheme, VStack, Center } from 'native-base';
 import { ChatTeardropText, SignOut } from 'phosphor-react-native';
-import { useState } from 'react';
 import Logo from '../assets/logo_secondary.svg';
 import { Button } from '../components/Button';
 import { Filter } from '../components/Filter';
@@ -9,35 +10,45 @@ import { Order, OrderProps } from '../components/Order';
 export function Home() {
 
     const [selectedStatus, setSelectedStatus] = useState<'open' | 'closed'>('open');
-    const [orders, setOrders] = useState<OrderProps[]>([]);
-        // {
-        //     id: '123',
-        //     patrimony: '123456',
-        //     when: '18/07/2022 às 10:30',
-        //     status: 'open'
-        // },
-        // {
-        //     id: '456',
-        //     patrimony: '456789',
-        //     when: '19/07/2022 às 10:30',
-        //     status: 'closed'
-        // },
-        // {
-        //     id: '3',
-        //     patrimony: '456789',
-        //     when: '19/07/2022 às 10:30',
-        //     status: 'closed'
-        // },
-        // {
-        //     id: '4',
-        //     patrimony: '456789',
-        //     when: '19/07/2022 às 10:30',
-        //     status: 'closed'
-        // }
+    const [orders, setOrders] = useState<OrderProps[]>([
+        {
+            id: '123',
+            patrimony: '123456',
+            when: '18/07/2022 às 10:30',
+            status: 'open'
+        },
+        {
+            id: '456',
+            patrimony: '456789',
+            when: '19/07/2022 às 10:30',
+            status: 'closed'
+        },
+        {
+            id: '3',
+            patrimony: '456789',
+            when: '19/07/2022 às 10:30',
+            status: 'closed'
+        },
+        {
+            id: '4',
+            patrimony: '456789',
+            when: '19/07/2022 às 10:30',
+            status: 'closed'
+        }
 
-    // ])
+    ])
+
+    const navigation = useNavigation();
 
     const { colors } = useTheme();
+
+    function handleNewOrder() {
+        navigation.navigate('new');
+    }
+
+    function handleOpenDetails(orderId: string) {
+        navigation.navigate('details', { orderId });
+    }
 
     return (
         <VStack flex={1} pb={6} bg="gray.700">
@@ -60,8 +71,13 @@ export function Home() {
 
             <VStack flex={1} px={6}>
                 <HStack w="full" mt={8} mb={4} justifyContent="space-between" alignItems="center">
+                    
                     <Heading color={colors.gray[100]}>Solicitações</Heading>
-                    <Text color={colors.gray[200]}>3</Text>
+                    
+                    <Text color={colors.gray[200]}>
+                        {orders.length}
+                    </Text>
+
                 </HStack>
             
                 <HStack 
@@ -85,7 +101,7 @@ export function Home() {
                 <FlatList 
                     data={orders}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <Order data={item} />}
+                    renderItem={({ item }) => <Order data={item} onPress={() => handleOpenDetails(item.id) } />}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ paddingBottom: 100 }}
                     ListEmptyComponent={() => (
@@ -108,6 +124,7 @@ export function Home() {
 
                 <Button 
                     title='Nova solicitação'
+                    onPress={handleNewOrder}
                 />
 
             </VStack>

@@ -58,5 +58,18 @@ npm i react-native-svg-transformer --save-dev
 npm install --save phosphor-react-native
 ```
 
+- [React Navigation](https://reactnavigation.org)
+```sh
+npm install @react-navigation/native
+```
+
+```sh
+npm install react-native-screens
+```
+
+```
+npm install @react-navigation/native-stack
+```
+
 VS Code Extensions:
 - [R Component](https://marketplace.visualstudio.com/items?itemName=rodrigorgtic.rcomponent)
