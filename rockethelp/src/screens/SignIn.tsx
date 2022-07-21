@@ -1,9 +1,11 @@
+import { useState } from "react";
+import auth from '@react-native-firebase/auth';
 import { Heading, VStack, Icon, useTheme } from "native-base";
 import { Envelope, Key } from 'phosphor-react-native';
-import { useState } from "react";
 import Logo from '../assets/logo_primary.svg';
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import { Alert } from "react-native";
 
 export function SignIn() {
     
@@ -13,7 +15,9 @@ export function SignIn() {
     const { colors } = useTheme();
 
     function handleSignIn() {
-
+        if(!email || !password) {
+            return Alert.alert('Entrar', 'Informe o e-mail e a senha!');
+        }
     }
 
     return (
